@@ -1,0 +1,25 @@
+name: 'Chlorine'
+version: '${version}'
+main: 'kr.choyunjin.chlorine.Chlorine'
+description: 'Just like Essentials, but almost not overrides Minecraft commands'
+author: 'Cho Yunjin'
+website: 'https://github.com/kmoon2437/chlorine'
+api-version: '1.21.1'
+
+# default 값이...
+# - true이면 모두에게 권한 부여
+# - false이면 누구도 권한을 부여받지 않음
+# - op, not op는 문자 그대로
+permissions:
+    chlorine.command.tell:
+        description: 'Permission for /tell command'
+        default: true
+    chlorine.command.tpa:
+        description: 'Permission for /tpa command'
+        default: true
+
+commands:
+    tell:
+        description: 'Whisper'
+        aliases: ['w', 'msg']
+        permission: 'chlorine.command.tell'
