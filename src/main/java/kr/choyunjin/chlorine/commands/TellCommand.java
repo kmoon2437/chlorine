@@ -5,7 +5,7 @@ import kr.choyunjin.commands.annotations.Command;
 import kr.choyunjin.commands.annotations.Permission;
 import kr.choyunjin.commands.annotations.Default;
 import kr.choyunjin.commands.annotations.arg.PlayerArg;
-import kr.choyunjin.commands.annotations.arg.StringArgGreedy;
+import kr.choyunjin.commands.annotations.arg.TextArg;
 
 @Command(
     name = "tell",
@@ -14,7 +14,7 @@ import kr.choyunjin.commands.annotations.arg.StringArgGreedy;
 @Permission("chlorine.command.tell")
 public class TellCommand {
     @Default
-    public void run(Player sender, @PlayerArg Player receiver, @StringArgGreedy String message) {
+    public void run(Player sender, @PlayerArg Player receiver, @TextArg String message) {
         sender.sendMessage(message);
     }
 }
