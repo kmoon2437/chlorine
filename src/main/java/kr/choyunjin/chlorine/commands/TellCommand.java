@@ -7,6 +7,7 @@ import kr.choyunjin.commands.annotations.Permission;
 import kr.choyunjin.commands.annotations.Default;
 import kr.choyunjin.commands.annotations.arg.PlayerArg;
 import kr.choyunjin.commands.annotations.arg.TextArg;
+import kr.choyunjin.chlorine.textrenderers.WhisperRenderer;
 
 @Command(
     name = "tell",
@@ -14,6 +15,12 @@ import kr.choyunjin.commands.annotations.arg.TextArg;
 )
 @Permission("chlorine.command.tell")
 public class TellCommand {
+    private WhisperRenderer renderer;
+
+    public TellCommand() {
+        this.renderer = new WhisperRenderer();
+    }
+
     @Default
     public void run(CommandSender sender) {
         sender.sendMessage("You are CommandSender!");
@@ -21,7 +28,7 @@ public class TellCommand {
 
     @Default
     public void run(Player sender, @PlayerArg Player receiver, @TextArg String message) {
-        sender.sendMessage("You are Player!");
-        sender.sendMessage(message);
+        sender.sendMessage(this.renderer.render("나", receiver.displayName(), message));
+        receiver.sendMessage(this.renderer.render(sender.displayName(), "나", message));
     }
 }
