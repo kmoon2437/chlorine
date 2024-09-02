@@ -4,4 +4,11 @@
 # Ignore Gradle build output directory
 build
 
+# vscode 썼더니 갑자기 생긴 폴더
+bin
+
+# vscode 설정 폴더
+.vscode
+
+# 임시 폴더
 tmp
