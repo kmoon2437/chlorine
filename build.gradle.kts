@@ -24,4 +24,8 @@ tasks {
             expand("version" to version)
         }
     }
+
+    withType<JavaCompile>() {
+        options.compilerArgs.add("-Xlint:unchecked")
+    }
 }
