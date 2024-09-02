@@ -21,7 +21,6 @@ public class TellCommand {
     }
 
     @Default
-    @PlayerSender
     public void run(Player sender, @PlayerArg Player receiver, @TextArg String message) {
         sender.sendMessage("You are Player!");
         sender.sendMessage(message);

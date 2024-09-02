@@ -149,6 +149,18 @@ public class CommandWrapper {
             e.printStackTrace();
         }
     }
+
+    private boolean isForPlayer(Method method) {
+        Class<?>[] argTypes = method.getParameterTypes();
+        int i = 0;
+        for (Annotation[] annotations : method.getParameterAnnotations()) {
+            if (annotations.length == 0 && argTypes[i] == Player.class) {
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
     
     private Method selectMethod(Method[] originalMethods, CommandSender sender) throws NoPermissionException, NoExecutionMethodException {
         List<Method> methodsWithAnnotation = Arrays.stream(originalMethods).filter(method -> {
@@ -172,12 +184,12 @@ public class CommandWrapper {
         
         if (sender instanceof Player) {
             List<Method> methodsForPlayer = permittedMethods.stream().filter(method -> {
-                return method.isAnnotationPresent(PlayerSender.class);
+                return this.isForPlayer(method);
             }).toList();
             methods = methodsForPlayer.size() == 0 ? permittedMethods : methodsForPlayer;
         } else {
             List<Method> methodsNotForPlayer = permittedMethods.stream().filter(method -> {
-                return !method.isAnnotationPresent(PlayerSender.class);
+                return !this.isForPlayer(method);
             }).toList();
             if (methodsNotForPlayer.size() == 0) {
                 throw new NoExecutionMethodException();
