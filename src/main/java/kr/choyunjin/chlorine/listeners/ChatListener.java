@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.entity.Player;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import io.papermc.paper.chat.ChatRenderer;
 import net.kyori.adventure.text.Component;
 import kr.choyunjin.chlorine.Chlorine;
 import kr.choyunjin.chlorine.textrenderers.ChatMessageRenderer;

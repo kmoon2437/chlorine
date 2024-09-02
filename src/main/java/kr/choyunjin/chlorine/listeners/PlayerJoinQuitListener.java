@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.entity.Player;
-import kr.choyunjin.chlorine.Chlorine;
 import kr.choyunjin.chlorine.textrenderers.JoinQuitMessageRenderer;
 
 public class PlayerJoinQuitListener implements Listener {

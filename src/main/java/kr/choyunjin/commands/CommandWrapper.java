@@ -17,7 +17,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import kr.choyunjin.commands.annotations.Command;
 import kr.choyunjin.commands.annotations.Permission;
 import kr.choyunjin.commands.annotations.Default;
-import kr.choyunjin.commands.annotations.PlayerSender;
 import kr.choyunjin.commands.annotations.arg.PlayerArg;
 import kr.choyunjin.commands.annotations.arg.StringArg;
 import kr.choyunjin.commands.annotations.arg.TextArg;
@@ -76,7 +75,7 @@ public class CommandWrapper {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
         if (this.permission != null && !player.hasPermission(this.permission)) {
             return;
@@ -111,29 +110,28 @@ public class CommandWrapper {
                 }
             }
             for (Annotation annotation : annotations) {
-                if (false) {
-                    // 언젠간 쓰겠지
-                } else if (!isGreedyTextArg) {
-                    if (argI >= args.length) {
-                        continue;
-                    } else if (annotation instanceof PlayerArg) {
-                        methodArgs[i] = sender.getServer().getPlayer(args[argI]);
-                    } else if (annotation instanceof StringArg) {
-                        methodArgs[i] = args[argI];
-                    } else if (annotation instanceof TextArg) {
-                        StringBuilder builder = new StringBuilder(args[argI++]);
-                        for (; argI < args.length; argI++) {
-                            builder.append(" ");
-                            builder.append(args[argI]);
-                        }
-                        methodArgs[i] = builder.toString();
-                        isGreedyTextArg = true;
-                    } else {
-                        continue;
+                if (isGreedyTextArg) {
+                    continue;
+                }
+
+                if (argI >= args.length) {
+                    continue;
+                } else if (annotation instanceof PlayerArg) {
+                    methodArgs[i] = sender.getServer().getPlayer(args[argI]);
+                } else if (annotation instanceof StringArg) {
+                    methodArgs[i] = args[argI];
+                } else if (annotation instanceof TextArg) {
+                    StringBuilder builder = new StringBuilder(args[argI++]);
+                    for (; argI < args.length; argI++) {
+                        builder.append(" ");
+                        builder.append(args[argI]);
                     }
+                    methodArgs[i] = builder.toString();
+                    isGreedyTextArg = true;
                 } else {
                     continue;
                 }
+
                 argI++; // 여기까지 왔다는 건 명령어 인자를 나타내는 annotation이 있다는 뜻
                 break;
             }
