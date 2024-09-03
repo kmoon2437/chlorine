@@ -4,8 +4,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import kr.choyunjin.commands.annotations.Command;
 import kr.choyunjin.commands.annotations.Permission;
 import kr.choyunjin.commands.annotations.Default;
@@ -42,15 +40,5 @@ public class TellCommand {
     public void run(Player sender, @PlayerArg Player receiver, @TextArg String message) {
         sender.sendMessage(this.renderer.render("나", receiver.displayName(), message));
         receiver.sendMessage(this.renderer.render(sender.displayName(), "나", message));
-    }
-    
-    @CommandNodeBuilder
-    public LiteralCommandNode<CommandSourceStack> buildNode() {
-        return Commands.literal("tell")
-            .then(
-                Commands.argument("player", ArgumentTypes.player())
-                    .then(Commands.argument("message", StringArgumentType.greedyString()))
-            )
-        .build();
     }
 }
