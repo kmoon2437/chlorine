@@ -7,6 +7,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * 추후 번역 쪽에서 형식을 바꿀 수 있도록 할 예정
  */
 public class WhisperRenderer {
+    public Component render(String from, String to, String message) {
+        return this.render(Component.text(from), Component.text(to), message);
+    }
+
     public Component render(String from, Component to, String message) {
         return this.render(Component.text(from), to, message);
     }
