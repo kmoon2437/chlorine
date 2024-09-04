@@ -1,10 +1,12 @@
 package kr.choyunjin.commands;
 
 import java.lang.reflect.Field;
-import com.mojang.brigadier.tree.CommandNode;
+import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
+import com.mojang.brigadier.tree.CommandNode;
+import com.mojang.brigadier.tree.RootCommandNode;
 
 // 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
 // 추후 compile time에 처리하도록 바꿀 예정
@@ -26,7 +28,9 @@ public abstract class BaseCommand {
         }
     }
 
-    protected String getGreedyStringArg(String[] args, int i) {
+    private CommandNode<?> commandNode;
+
+    protected String getGreedyString(String[] args, int i) {
         StringBuilder builder = new StringBuilder(args[i]);
         i++;
         for (; i < args.length; i++) {
@@ -39,7 +43,9 @@ public abstract class BaseCommand {
         this.run(server, (CommandSender)sender, label, args);
     }
 
-    abstract public void run(Server server, CommandSender sender, String label, String[] args) throws Exception;
+    public void run(Server server, CommandSender sender, String label, String[] args) throws Exception {
+        throw new RuntimeException("No command runner method found");
+    }
 
     @SuppressWarnings("unchecked")
     private void removeChildNode(RootCommandNode<?> rootNode, String name) {
@@ -55,9 +61,6 @@ public abstract class BaseCommand {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
-        if (this.permission != null && !player.hasPermission(this.permission)) {
-            return;
-        }
         this.removeChildNode(rootNode, this.commandNode.getName());
         rootNode.addChild((CommandNode)this.commandNode);
     }

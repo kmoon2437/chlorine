@@ -1,4 +1,4 @@
-package kr.choyunjin.commands.annotations;
+package kr.choyunjin.commands;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;

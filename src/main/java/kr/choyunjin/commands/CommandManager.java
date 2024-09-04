@@ -31,15 +31,15 @@ public class CommandManager implements Listener {
     }
 
     private void generateIndex() {
-        this.commandsIndex = new HashMap<>();
+        /*this.commandsIndex = new HashMap<>();
         int i = 0;
-        for (CommandWrapper command : this.commands) {
+        for (BaseCommand command : this.commands) {
             this.commandsIndex.put(command.name, i);
             for (String alias : command.aliases) {
                 this.commandsIndex.put(alias, i);
             }
             i++;
-        }
+        }*/
     }
 
     @EventHandler
