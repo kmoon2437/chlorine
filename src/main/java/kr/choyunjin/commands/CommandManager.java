@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
-import kr.choyunjin.commands.exceptions.NoPermissionException;
 
 public class CommandManager implements Listener {
     private Plugin plugin;
