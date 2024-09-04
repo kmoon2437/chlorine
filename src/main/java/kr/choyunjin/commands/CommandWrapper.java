@@ -23,8 +23,6 @@ import kr.choyunjin.commands.annotations.arg.TextArg;
 import kr.choyunjin.commands.exceptions.NoPermissionException;
 import kr.choyunjin.commands.exceptions.NoExecutionMethodException;
 
-// 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
-// 추후 compile time에 처리하도록 바꿀 예정
 public class CommandWrapper {
     private static final Field[] CHILDREN_FIELDS;
 

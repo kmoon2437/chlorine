@@ -13,21 +13,19 @@ import kr.choyunjin.commands.exceptions.NoPermissionException;
 
 public class CommandManager implements Listener {
     private Plugin plugin;
-    private ArrayList<CommandWrapper> commands;
+    private ArrayList<BaseCommand> commands;
     private HashMap<String, Integer> commandsIndex;
-    private ExceptionHandler exceptionHandler;
 
     public CommandManager(Plugin plugin) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
         this.commands = new ArrayList<>();
         this.commandsIndex = new HashMap<>();
-        this.exceptionHandler = new DefaultExceptionHandler();
     }
 
-    public void registerCommands(Object... commands) {
-        for (Object command : commands) {
-            this.commands.add(new CommandWrapper(command));
+    public void registerCommands(BaseCommand... commands) {
+        for (BaseCommand command : commands) {
+            this.commands.add(command);
         }
         this.generateIndex();
     }
@@ -46,27 +44,18 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public void onPlayerSendCommandsEvent(AsyncPlayerSendCommandsEvent<?> event) {
-        for (CommandWrapper command : this.commands) {
-            command.applyCommandNode(event.getPlayer(), event.getCommandNode());
+        for (BaseCommand command : this.commands) {
+            //command.applyCommandNode(event.getPlayer(), event.getCommandNode());
         }
     }
 
-    private CommandWrapper getCommand(String label) {
+    private BaseCommand getCommand(String label) {
         return this.commands.get(this.commandsIndex.get(label));
     }
 
-    public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) {
-        CommandWrapper command = this.getCommand(label);
-
-        try {
-            command.run(sender, label, args);
-        } catch (NoPermissionException e) {
-            this.exceptionHandler.handleNoPermission(sender);
-        } catch (Exception e) {
-            this.exceptionHandler.handleOtherException(sender);
-            e.printStackTrace();
-        }
-
+    public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) throws Exception {
+        BaseCommand command = this.getCommand(label);
+        command.run(sender.getServer(), sender, label, args);
         return true;
     }
 

@@ -1,43 +1,40 @@
 package kr.choyunjin.chlorine.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.RemoteConsoleCommandSender;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import kr.choyunjin.commands.annotations.Command;
-import kr.choyunjin.commands.annotations.Permission;
-import kr.choyunjin.commands.annotations.Default;
-import kr.choyunjin.commands.annotations.arg.PlayerArg;
-import kr.choyunjin.commands.annotations.arg.TextArg;
+import org.bukkit.command.CommandSender;
+import kr.choyunjin.commands.BaseCommand;
+import kr.choyunjin.commands.DeclareCommand;
 import kr.choyunjin.chlorine.textrenderers.WhisperRenderer;
 
-@Command(
+@DeclareCommand(
     name = "tell",
     aliases = { "w", "msg" }
 )
-@Permission("chlorine.command.tell")
-public class TellCommand {
+public class TellCommand extends BaseCommand {
     private WhisperRenderer renderer;
 
     public TellCommand() {
         this.renderer = new WhisperRenderer();
     }
 
-    @Default
-    public void run(CommandSender sender, @PlayerArg Player receiver, @TextArg String message) {
-        if (sender instanceof ConsoleCommandSender) {
-            sender.sendMessage(this.renderer.render("나", receiver.displayName(), message));
-            receiver.sendMessage(this.renderer.render("(Server)", "나", message));
-        } else if (sender instanceof RemoteConsoleCommandSender) {
-            sender.sendMessage(this.renderer.render("나", receiver.displayName(), message));
-            receiver.sendMessage(this.renderer.render("(Server)", "나", message));
-        } else {
-            sender.sendMessage("Failed to send whisper");
+    @Override
+    public void run(Server server, Player sender, String label, String[] args) throws Exception {
+        if (!sender.hasPermission("chlorine.command.tell")) {
+            throw new NoPermissionException();
         }
-    }
 
-    @Default
-    public void run(Player sender, @PlayerArg Player receiver, @TextArg String message) {
+        if (args.length < 2) {
+            throw new NotEnoughArgumentsException();
+        }
+
+        Player receiver = server.getPlayer(args[1]);
+        if (receiver == null) {
+            throw new CommandException("No such player exists");
+        }
+
+        String message = this.getGreedyString(args, 1);
+    
         sender.sendMessage(this.renderer.render("나", receiver.displayName(), message));
         receiver.sendMessage(this.renderer.render(sender.displayName(), "나", message));
     }
