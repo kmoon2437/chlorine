@@ -1,10 +1,10 @@
 [general]
-playerNotFound = "해당 플레이어가 존재하지 않습니다."
+playerNotFound = "<red>해당 플레이어가 존재하지 않습니다.</red>"
 
 [command]
-noPermission = "이 명령어를 실행할 권한이 없습니다."
-notEnoughArguments = "인자가 부족합니다. 아래의 도움말을 참조하십시오:"
-error = "명령 실행 도중 오류가 발생했습니다. 서버 관리자에게 문의하십시오."
+noPermission = "<red>이 명령어를 실행할 권한이 없습니다.</red>"
+notEnoughArguments = "<red>인자가 부족합니다. 아래의 도움말을 참조하십시오:</red>"
+error = "<red>명령 실행 도중 오류가 발생했습니다. 서버 관리자에게 문의하십시오.</red>"
 
 [command.tell]
 you = "나"

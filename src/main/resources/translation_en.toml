@@ -1,13 +1,13 @@
 [general]
-playerNotFound = "No such player exists."
+playerNotFound = "<red>No such player exists.</red>"
 
 [command]
-noPermission = "You are not permitted for this command."
-notEnoughArguments = "Insufficient arguments. See the help message below:"
-error = "An error occured while executing the command. Please contact the manager of server."
+noPermission = "<red>You are not permitted for this command.</red>"
+notEnoughArguments = "<red>Insufficient arguments. See the help message below:</red>"
+error = "<red>An error occured while executing the command. Please contact the manager of server.</red>"
 
 [command.tell]
-you="you"
+you = "you"
 
 [command.tpa]
 requestSent = "<aqua>Sent a teleport request to</aqua> <player><aqua>.</aqua>"
