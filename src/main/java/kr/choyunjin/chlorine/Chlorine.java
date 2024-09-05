@@ -7,8 +7,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.tomlj.Toml;
 import kr.choyunjin.commands.CommandManager;
 import kr.choyunjin.commands.exceptions.NoPermissionException;
@@ -59,6 +57,7 @@ public class Chlorine extends JavaPlugin {
         );
     }
 
+    @SuppressWarnings("finally")
     @Override
     public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) {
         boolean result = true;

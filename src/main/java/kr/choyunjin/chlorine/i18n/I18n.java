@@ -1,10 +1,7 @@
 package kr.choyunjin.chlorine.i18n;
 
-import java.io.InputStream;
-import java.io.IOException;
 import org.tomlj.TomlParseResult;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;

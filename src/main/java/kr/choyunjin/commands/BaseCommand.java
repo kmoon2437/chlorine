@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-import kr.choyunjin.commands.exceptions.*;
 
 public abstract class BaseCommand {
     private static final Field[] CHILDREN_FIELDS;
@@ -64,7 +63,11 @@ public abstract class BaseCommand {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
-        //this.removeChildNode(rootNode, this.commandNode.getName());
-        //rootNode.addChild((CommandNode)this.commandNode);
+        try {
+            this.removeChildNode(rootNode, this.commandNode.getName());
+            rootNode.addChild((CommandNode)this.commandNode);
+        } catch (NullPointerException e) {
+            // 추후 애초에 commandNode가 null이 안 되게 할 예정
+        }
     }
 }
