@@ -1,6 +1,8 @@
 package kr.choyunjin.chlorine;
 
+import java.io.InputStream;
 import java.io.IOException;
+import org.slf4j.Logger;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.CommandSender;
@@ -22,16 +24,25 @@ public class Chlorine extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // 로그 남기는 용도
+        Logger logger = this.getSLF4JLogger();
+
         // 설정파일 생성
         this.saveDefaultConfig();
         
+        String langName = this.getConfig().getString("lang");
         StringBuilder langFileName = new StringBuilder("translation_");
-        langFileName.append(this.getConfig().getString("lang"));
+        langFileName.append(langName);
         langFileName.append(".toml");
 
         // 번역 파일 세팅
         try {
-            this.i18n = new I18n(Toml.parse(this.getResource(langFileName.toString())));
+            InputStream langFileData = this.getResource(langFileName.toString());
+            if (langFileData == null) {
+                logger.warn("Language \"{}\" not found, falling back to \"en\" (English)", langName);
+                langFileData = this.getResource("translation_en.toml");
+            }
+            this.i18n = new I18n(Toml.parse(langFileData));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
