@@ -32,6 +32,7 @@ tasks {
         options.compilerArgs.add("-Xlint:unchecked")
     }
     
+    // implementation으로 설정한 것들을 jar에다가 집어넣어줌
     shadowJar {
         relocate("org.tomlj", "kr.choyunjin.chlorine.shadow.tomlj")
         relocate("org.antlr", "kr.choyunjin.chlorine.shadow.antlr")
