@@ -1,3 +1,15 @@
 package kr.choyunjin.commands.exceptions;
 
-public class NotEnoughArgumentsException extends Exception {}
+import kr.choyunjin.commands.BaseCommand;
+
+public class NotEnoughArgumentsException extends CommandException {
+    private BaseCommand command;
+
+    public NotEnoughArgumentsException(BaseCommand command) {
+        this.command = command;
+    }
+
+    public BaseCommand getCommand() {
+        return this.command;
+    }
+}

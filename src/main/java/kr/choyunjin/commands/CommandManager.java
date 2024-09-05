@@ -3,13 +3,17 @@ package kr.choyunjin.commands;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
+import kr.choyunjin.commands.exceptions.NoPermissionException;
 
+// 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
+// 추후 compile time에 처리하도록 바꿀 예정
 public class CommandManager implements Listener {
     private Plugin plugin;
     private ArrayList<BaseCommand> commands;
@@ -30,21 +34,26 @@ public class CommandManager implements Listener {
     }
 
     private void generateIndex() {
-        /*this.commandsIndex = new HashMap<>();
+        this.commandsIndex = new HashMap<>();
         int i = 0;
         for (BaseCommand command : this.commands) {
-            this.commandsIndex.put(command.name, i);
-            for (String alias : command.aliases) {
+            DeclareCommand meta = command.getClass().getAnnotation(DeclareCommand.class);
+            this.commandsIndex.put(meta.name(), i);
+            for (String alias : meta.aliases()) {
                 this.commandsIndex.put(alias, i);
             }
             i++;
-        }*/
+        }
     }
 
     @EventHandler
     public void onPlayerSendCommandsEvent(AsyncPlayerSendCommandsEvent<?> event) {
+        Player sender = event.getPlayer();
         for (BaseCommand command : this.commands) {
-            //command.applyCommandNode(event.getPlayer(), event.getCommandNode());
+            Permission permission = command.getClass().getAnnotation(Permission.class);
+            if (permission == null || sender.hasPermission(permission.value())) {
+                command.applyCommandNode(sender, event.getCommandNode());
+            }
         }
     }
 
@@ -54,7 +63,18 @@ public class CommandManager implements Listener {
 
     public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) throws Exception {
         BaseCommand command = this.getCommand(label);
-        command.run(sender.getServer(), sender, label, args);
+
+        Permission permission = command.getClass().getAnnotation(Permission.class);
+        if (permission == null || sender.hasPermission(permission.value())) {
+            if (sender instanceof Player) {
+                command.run(sender.getServer(), (Player)sender, label, args);
+            } else {
+                command.run(sender.getServer(), sender, label, args);
+            }
+        } else {
+            throw new NoPermissionException();
+        }
+
         return true;
     }
 

@@ -8,24 +8,24 @@ rewrite-chat: true
 #       수정해도 적용되지 않습니다!        #
 ############################################
 
-# 공통: {message} 부분은 해당 유저가 보낸 메세지로 대체됩니다.
+# 공통: <message> 부분은 해당 유저가 보낸 메세지로 대체됩니다.
 chat-formats:
-    # {name} 부분은 해당 유저의 닉네임으로 대체됩니다.
-    chat: '{name}&r &7>&r {message}'
-    me: '&7* {name}&r&7: {message}'
-    say: '[{name}&r] {message}'
+    # <name> 부분은 해당 유저의 닉네임으로 대체됩니다.
+    chat: '<name><gray> > </gray><message>'
+    me: '<gray>* </gray><name><gray>: <message>'
+    say: '[<name><reset>] <message>'
 
-    # {from} 부분은 '나' 또는 그에 상응하는 번역명으로 대체됩니다.
-    # {to} 부분은 귓속말을 받을 사람의 닉네임으로 대체됩니다.
-    whisper-sent: '&b[&r{from}&r &e->&r {to}&r&b] &7>&r {message}'
+    # <from> 부분은 '나' 또는 그에 상응하는 번역명으로 대체됩니다.
+    # <to> 부분은 귓속말을 받을 사람의 닉네임으로 대체됩니다.
+    whisper-sent: '<aqua>[</aqua><from><yellow> -> </yellow><to><blue>]</blue><gray> > </gray><message>'
 
-    # {from} 부분은 귓속말을 보낸 사람의 닉네임으로 대체됩니다.
-    # {to} 부분은 '나' 또는 그에 상응하는 번역명으로 대체됩니다.
-    whisper-received: '&b[&r{from}&r &e->&r {to}&r&b] &7>&r {message}'
+    # <from> 부분은 귓속말을 보낸 사람의 닉네임으로 대체됩니다.
+    # <to> 부분은 '나' 또는 그에 상응하는 번역명으로 대체됩니다.
+    whisper-received: '<aqua>[</aqua><from><yellow> -> </yellow><to><blue>]</blue><gray> > </gray><message>'
 
-# {name} 부분은 해당 유저의 닉네임으로 대체됩니다.
-# {current}, {max} 부분은 각각 현재 접속자 수와 최대 접속자 수로 대체됩니다.
+# <name> 부분은 해당 유저의 닉네임으로 대체됩니다.
+# <current>, <max> 부분은 각각 현재 접속자 수와 최대 접속자 수로 대체됩니다.
 join-message-formats:
-    first-join: '&a+=&r {name}&r &b[&e{current} &f/ &e{max}&b]'
-    join: '&a+=&r {name} &b[&e{current} &f/ &e{max}&b]'
-    quit: '&c-=&r {name} &b[&e{current} &f/ &e{max}&b]'
+    first-join: '<blue>+=</blue> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'
+    join: '<green>+=</green> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'
+    quit: '<red>-=</red> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'

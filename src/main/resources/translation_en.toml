@@ -1,0 +1,21 @@
+[general]
+playerNotFound = "No such player exists."
+
+[command]
+noPermission = "You are not permitted for this command."
+notEnoughArguments = "Insufficient arguments. See the help message below:"
+error = "An error occured while executing the command. Please contact the manager of server."
+
+[command.tell]
+you="you"
+
+[command.tpa]
+requestSent = "<aqua>Sent a teleport request to</aqua> <player><aqua>.</aqua>"
+howToCancel = "<aqua>Type <yellow>/tpacancel</yellow> to <red>cancel</red> it.</aqua>"
+requestReceived = "<player> <aqua>wants to teleport to you.</aqua>"
+beingWantedToTeleport = "<player> <aqua>wants you to teleport there.</aqua>"
+acceptOrDeny = "<aqua>Type <yellow>/tpaccept</yellow> to <green>accept</green>, or <yellow>/tpdeny</yellow> to <red>deny</red> it.</aqua>"
+tpaccept = "<green>Accepted</green> <aqua>teleport request from</aqua> <player>."
+tpdeny = "<red>Denied</red> <aqua>teleport request from</aqua> <player>."
+requestAccepted = "<player> <green>accepted</green> <aqua>your teleport request.</aqua>"
+requestDenied = "<player> <red>denied</red> <aqua>your teleport request.</aqua>"

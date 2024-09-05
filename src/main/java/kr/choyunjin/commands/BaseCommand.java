@@ -7,9 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
+import kr.choyunjin.commands.exceptions.*;
 
-// 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
-// 추후 compile time에 처리하도록 바꿀 예정
 public abstract class BaseCommand {
     private static final Field[] CHILDREN_FIELDS;
 
@@ -44,7 +43,11 @@ public abstract class BaseCommand {
     }
 
     public void run(Server server, CommandSender sender, String label, String[] args) throws Exception {
-        throw new RuntimeException("No command runner method found");
+        throw new Exception("No command runner method found. Please implement a new one");
+    }
+
+    public void showHelp(CommandSender sender) {
+        // 일단 아무것도 안함
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +64,7 @@ public abstract class BaseCommand {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
-        this.removeChildNode(rootNode, this.commandNode.getName());
-        rootNode.addChild((CommandNode)this.commandNode);
+        //this.removeChildNode(rootNode, this.commandNode.getName());
+        //rootNode.addChild((CommandNode)this.commandNode);
     }
 }
