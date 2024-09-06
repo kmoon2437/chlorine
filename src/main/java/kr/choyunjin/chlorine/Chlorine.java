@@ -1,5 +1,6 @@
 package kr.choyunjin.chlorine;
 
+import java.util.List;
 import java.io.InputStream;
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -79,6 +80,10 @@ public class Chlorine extends JavaPlugin {
         } finally {
             return result;
         }
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command ctx, String label, String[] args) {
+        return this.commandManager.onTabComplete(sender, ctx, label, args);
     }
 
     public PlayerMap players() {
