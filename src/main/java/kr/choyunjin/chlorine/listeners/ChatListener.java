@@ -10,11 +10,11 @@ import kr.choyunjin.chlorine.Chlorine;
 import kr.choyunjin.chlorine.textrenderers.ChatMessageRenderer;
 
 public class ChatListener implements Listener {
-    private Chlorine chlorine;
+    private Chlorine cl;
     private ChatMessageRenderer renderer;
 
-    public ChatListener(Chlorine chlorine) {
-        this.chlorine = chlorine;
+    public ChatListener(Chlorine cl) {
+        this.cl = cl;
         this.renderer = new ChatMessageRenderer();
     }
 
@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
         ignoreCancelled = false
     )
     public void onChat(AsyncChatEvent event) {
-        if (this.chlorine.getConfig().getBoolean("rewrite-chat")) {
+        if (this.cl.getConfig().getBoolean("rewrite-chat")) {
             // 채팅 이벤트를 취소함
             event.setCancelled(true);
 
