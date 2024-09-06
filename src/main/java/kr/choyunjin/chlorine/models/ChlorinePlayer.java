@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Set;
 import org.bukkit.entity.Player;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 
 public class ChlorinePlayer {
     // 원본 player 데이터
@@ -17,6 +19,18 @@ public class ChlorinePlayer {
     public ChlorinePlayer(Player player) {
         this.player = player;
         this.tpaStack = new LinkedHashMap<>();
+    }
+    
+    public void sendMessage(String message) {
+        this.player.sendMessage(message);
+    }
+
+    public void sendMessage(Component message) {
+        this.player.sendMessage(message);
+    }
+
+    public void sendMessage(ComponentLike message) {
+        this.player.sendMessage(message);
     }
 
     public void addTPARequest(UUID senderUUID) {

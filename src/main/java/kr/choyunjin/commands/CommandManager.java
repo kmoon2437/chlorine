@@ -32,12 +32,13 @@ public class CommandManager implements Listener {
         }
         this.generateIndex();
     }
-
+    
     private void generateIndex() {
         this.commandsIndex = new HashMap<>();
         int i = 0;
         for (BaseCommand command : this.commands) {
             DeclareCommand meta = command.getClass().getAnnotation(DeclareCommand.class);
+            command.generateCommandNode(meta.name());
             this.commandsIndex.put(meta.name(), i);
             for (String alias : meta.aliases()) {
                 this.commandsIndex.put(alias, i);

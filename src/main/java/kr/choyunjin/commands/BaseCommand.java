@@ -5,6 +5,7 @@ import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
 
@@ -27,6 +28,10 @@ public abstract class BaseCommand {
     }
 
     private CommandNode<?> commandNode;
+
+    public CommandNode<?> generateCommandNode(String name) {
+        return LiteralArgumentBuilder.literal(name).build();
+    }
 
     protected String getGreedyString(String[] args, int i) {
         StringBuilder builder = new StringBuilder(args[i]);
@@ -62,12 +67,12 @@ public abstract class BaseCommand {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
-        try {
-            this.removeChildNode(rootNode, this.commandNode.getName());
-            rootNode.addChild((CommandNode)this.commandNode);
-        } catch (NullPointerException e) {
-            // 추후 애초에 commandNode가 null이 안 되게 할 예정
+    public void applyCommandNode(Player player, RootCommandNode<?> rootNode, String label) {
+        if (this.commandNode == null) {
+            this.commandNode = this.generateCommandNode(label);
         }
+
+        this.removeChildNode(rootNode, this.commandNode.getName());
+        rootNode.addChild((CommandNode)this.commandNode);
     }
 }

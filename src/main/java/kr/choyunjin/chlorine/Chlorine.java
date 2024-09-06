@@ -13,12 +13,14 @@ import kr.choyunjin.commands.exceptions.NoPermissionException;
 import kr.choyunjin.commands.exceptions.NotEnoughArgumentsException;
 import kr.choyunjin.chlorine.i18n.I18n;
 import kr.choyunjin.chlorine.listeners.*;
+import kr.choyunjin.chlorine.models.PlayerMap;
 import kr.choyunjin.chlorine.commands.*;
 import kr.choyunjin.chlorine.exceptions.AdventureComponentException;
 
 public class Chlorine extends JavaPlugin {
     private CommandManager commandManager;
     private I18n i18n;
+    private PlayerMap playerMap;
 
     @Override
     public void onEnable() {
@@ -53,7 +55,8 @@ public class Chlorine extends JavaPlugin {
         // 명령어 세팅
         this.commandManager = new CommandManager(this);
         this.commandManager.registerCommands(
-            new TellCommand(this.i18n)
+            new TellCommand(this.i18n),
+            new TPACommand(this, this.i18n)
         );
     }
 
@@ -76,5 +79,9 @@ public class Chlorine extends JavaPlugin {
         } finally {
             return result;
         }
+    }
+
+    public PlayerMap players() {
+        return this.playerMap;
     }
 }
