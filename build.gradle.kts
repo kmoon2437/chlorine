@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.0"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 version = "0.0.0"
@@ -41,5 +42,9 @@ tasks {
 
     jar {
         finalizedBy(shadowJar)
+    }
+
+    runServer {
+        minecraftVersion("1.21.1")
     }
 }
