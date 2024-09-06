@@ -40,7 +40,7 @@ public abstract class BaseCommand {
         this.name = name;
         this.aliases = aliases;
         this.permission = null;
-        this.generateCommandNode(CommandNodeBuilder.getInstance());
+        this.commandNode = this.generateCommandNode(CommandNodeBuilder.getInstance());
     }
     
     public String name() {

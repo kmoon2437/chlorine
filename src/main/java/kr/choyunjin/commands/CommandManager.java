@@ -38,9 +38,8 @@ public class CommandManager implements Listener {
         this.commandsIndex = new HashMap<>();
         int i = 0;
         for (BaseCommand command : this.commands) {
-            DeclareCommand meta = command.getClass().getAnnotation(DeclareCommand.class);
-            this.commandsIndex.put(meta.name(), i);
-            for (String alias : meta.aliases()) {
+            this.commandsIndex.put(command.name(), i);
+            for (String alias : command.aliases()) {
                 this.commandsIndex.put(alias, i);
             }
             i++;
@@ -51,8 +50,8 @@ public class CommandManager implements Listener {
     public void onPlayerSendCommandsEvent(AsyncPlayerSendCommandsEvent<?> event) {
         Player sender = event.getPlayer();
         for (BaseCommand command : this.commands) {
-            Permission permission = command.getClass().getAnnotation(Permission.class);
-            if (permission == null || sender.hasPermission(permission.value())) {
+            String permission = command.permission();
+            if (permission == null || sender.hasPermission(permission)) {
                 command.applyCommandNode(sender, event.getCommandNode());
             }
         }
@@ -81,6 +80,10 @@ public class CommandManager implements Listener {
 
     public List<String> onTabComplete(CommandSender sender, Command ctx, String label, String[] args) {
         BaseCommand command = this.getCommand(label);
+
+        if (command == null) {
+            return Collections.emptyList();
+        }
 
         String permission = command.permission();
         if (permission == null || sender.hasPermission(permission)) {
