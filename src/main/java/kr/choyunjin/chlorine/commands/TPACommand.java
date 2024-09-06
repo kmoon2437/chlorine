@@ -52,4 +52,12 @@ public class TPACommand extends BaseCommand {
         sender.sendMessage(i18n.tl("command.tpa.requestSent", i18n.param("player", sender.displayName())));
         sender.sendMessage(i18n.tl("command.tpa.howToCancel"));
     }
+
+    @Override
+    public List<String> getTabCompleteOptions(Server server, CommandSender sender, String label, String[] args) {
+        if (args.length == 1) {
+            return getAllPlayerNames(server);
+        }
+        return Collections.emptyList();
+    }
 }
