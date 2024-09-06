@@ -49,7 +49,7 @@ public class TPACommand extends BaseCommand {
         receiver.sendMessage(i18n.tl("command.tpa.tpaReceived", i18n.param("player", sender.displayName())));
         receiver.sendMessage(i18n.tl("command.tpa.acceptOrDeny"));
 
-        sender.sendMessage(i18n.tl("command.tpa.requestSent", i18n.param("player", sender.displayName())));
+        sender.sendMessage(i18n.tl("command.tpa.requestSent", i18n.param("player", receiver.displayName())));
         sender.sendMessage(i18n.tl("command.tpa.howToCancel"));
     }
 

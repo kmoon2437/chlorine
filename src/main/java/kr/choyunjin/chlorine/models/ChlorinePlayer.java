@@ -20,7 +20,15 @@ public class ChlorinePlayer {
         this.player = player;
         this.tpaStack = new LinkedHashMap<>();
     }
-    
+
+    public Component displayName() {
+        return this.player.displayName();
+    }
+
+    public void displayName(Component displayName) {
+        this.player.displayName(displayName);
+    }
+
     public void sendMessage(String message) {
         this.player.sendMessage(message);
     }

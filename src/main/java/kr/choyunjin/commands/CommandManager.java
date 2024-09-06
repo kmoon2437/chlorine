@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
+import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
+
 import kr.choyunjin.commands.exceptions.NoPermissionException;
 
 // 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
@@ -48,12 +50,33 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public void onPlayerSendCommandsEvent(AsyncPlayerSendCommandsEvent<?> event) {
+        if (!event.isAsynchronous() && event.hasFiredAsync()) {
+            return;
+        }
+
         Player sender = event.getPlayer();
         for (BaseCommand command : this.commands) {
             String permission = command.permission();
             if (permission == null || sender.hasPermission(permission)) {
                 command.applyCommandNode(sender, event.getCommandNode());
             }
+        }
+    }
+
+    @EventHandler
+    public void onAsyncTabComplete(AsyncTabCompleteEvent event) {
+        if (!event.isCommand()) return;
+
+        String buf = event.getBuffer();
+        if (buf.isEmpty()) return;
+
+        if (buf.charAt(0) == '/') {
+            buf = buf.substring(1);
+        }
+
+        int firstSpace = buf.indexOf(' ');
+        if (firstSpace < 0) {
+            return;
         }
     }
 

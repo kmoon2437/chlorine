@@ -23,3 +23,6 @@ commands:
         description: 'Whisper'
         aliases: ['w', 'msg']
         permission: 'chlorine.command.tell'
+    tpa:
+        description: 'Teleport request'
+        permission: 'chlorine.command.tpa'

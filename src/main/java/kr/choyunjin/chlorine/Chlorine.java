@@ -14,8 +14,8 @@ import kr.choyunjin.commands.exceptions.NoPermissionException;
 import kr.choyunjin.commands.exceptions.NotEnoughArgumentsException;
 import kr.choyunjin.chlorine.i18n.I18n;
 import kr.choyunjin.chlorine.listeners.*;
-import kr.choyunjin.chlorine.models.PlayerMap;
 import kr.choyunjin.chlorine.commands.*;
+import kr.choyunjin.chlorine.models.PlayerMap;
 import kr.choyunjin.chlorine.exceptions.AdventureComponentException;
 
 public class Chlorine extends JavaPlugin {
@@ -30,13 +30,13 @@ public class Chlorine extends JavaPlugin {
 
         // 설정파일 생성
         this.saveDefaultConfig();
-        
+
+        // 번역 파일 세팅
         String langName = this.getConfig().getString("lang");
         StringBuilder langFileName = new StringBuilder("translation_");
         langFileName.append(langName);
         langFileName.append(".toml");
 
-        // 번역 파일 세팅
         try {
             InputStream langFileData = this.getResource(langFileName.toString());
             if (langFileData == null) {
@@ -47,6 +47,9 @@ public class Chlorine extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // 플레이어 데이터 map 생성
+        this.playerMap = new PlayerMap();
 
         // event listener 추가
         PluginManager pluginManager = this.getServer().getPluginManager();
@@ -82,7 +85,9 @@ public class Chlorine extends JavaPlugin {
         }
     }
 
+    @Override
     public List<String> onTabComplete(CommandSender sender, Command ctx, String label, String[] args) {
+        this.getSLF4JLogger().info(label);
         return this.commandManager.onTabComplete(sender, ctx, label, args);
     }
 
