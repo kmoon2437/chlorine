@@ -2,6 +2,10 @@ package kr.choyunjin.commands;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
@@ -27,10 +31,36 @@ public abstract class BaseCommand {
         }
     }
 
+    private String name;
+    private String[] aliases;
+    private String permission;
     private CommandNode<?> commandNode;
 
-    public CommandNode<?> generateCommandNode(String name) {
-        return LiteralArgumentBuilder.literal(name).build();
+    protected BaseCommand(String name, String... aliases) {
+        this.name = name;
+        this.aliases = aliases;
+        this.permission = null;
+        this.generateCommandNode(CommandNodeBuilder.getInstance());
+    }
+    
+    public String name() {
+        return this.name;
+    }
+
+    public String[] aliases() {
+        return this.aliases;
+    }
+
+    public String permission() {
+        return this.permission;
+    }
+
+    protected void permission(String permission) {
+        this.permission = permission;
+    }
+
+    public CommandNode<?> generateCommandNode(CommandNodeBuilder b) {
+        return b.literal(this.name).build();
     }
 
     protected String getGreedyString(String[] args, int i) {
@@ -54,6 +84,19 @@ public abstract class BaseCommand {
         // 일단 아무것도 안함
     }
 
+    protected List<String> getAllPlayerNames(Server server) {
+        List<String> playerNames = new ArrayList<>();
+        Iterator<? extends Player> players = server.getOnlinePlayers().iterator();
+        while (players.hasNext()) {
+            playerNames.add(players.next().getName());
+        }
+        return playerNames;
+    }
+
+    public List<String> getTabCompleteOptions(Server server, CommandSender sender, String label, String[] args) {
+        return Collections.emptyList();
+    }
+
     @SuppressWarnings("unchecked")
     private void removeChildNode(RootCommandNode<?> rootNode, String name) {
         try {
@@ -67,11 +110,7 @@ public abstract class BaseCommand {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void applyCommandNode(Player player, RootCommandNode<?> rootNode, String label) {
-        if (this.commandNode == null) {
-            this.commandNode = this.generateCommandNode(label);
-        }
-
+    public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
         this.removeChildNode(rootNode, this.commandNode.getName());
         rootNode.addChild((CommandNode)this.commandNode);
     }

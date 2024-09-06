@@ -2,7 +2,10 @@ package kr.choyunjin.chlorine.commands;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
+import com.mojang.brigadier.tree.CommandNode;
 import kr.choyunjin.commands.BaseCommand;
+import kr.choyunjin.commands.CommandNodeBuilder;
 import kr.choyunjin.commands.DeclareCommand;
 import kr.choyunjin.commands.Permission;
 import kr.choyunjin.commands.exceptions.NotEnoughArgumentsException;
@@ -11,15 +14,24 @@ import kr.choyunjin.chlorine.i18n.I18n;
 import kr.choyunjin.chlorine.models.ChlorinePlayer;
 import kr.choyunjin.chlorine.exceptions.AdventureComponentException;
 
-@DeclareCommand(name = "tpa")
-@Permission("chlorine.command.tpa")
 public class TPACommand extends BaseCommand {
     private Chlorine cl;
     private I18n i18n;
 
     public TPACommand(Chlorine cl, I18n i18n) {
+        super("tpa");
+        permission("chlorine.command.tpa");
+
         this.cl = cl;
         this.i18n = i18n;
+    }
+
+    @Override
+    public CommandNode<?> generateCommandNode(CommandNodeBuilder b) {
+        return b.literal(this.name())
+        .then(
+            b.argument("player", b.wordArg())
+        ).build();
     }
 
     @Override

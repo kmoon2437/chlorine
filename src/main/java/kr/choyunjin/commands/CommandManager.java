@@ -3,6 +3,7 @@ package kr.choyunjin.commands;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.event.Listener;
@@ -38,7 +39,6 @@ public class CommandManager implements Listener {
         int i = 0;
         for (BaseCommand command : this.commands) {
             DeclareCommand meta = command.getClass().getAnnotation(DeclareCommand.class);
-            command.generateCommandNode(meta.name());
             this.commandsIndex.put(meta.name(), i);
             for (String alias : meta.aliases()) {
                 this.commandsIndex.put(alias, i);
@@ -65,8 +65,8 @@ public class CommandManager implements Listener {
     public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) throws Exception {
         BaseCommand command = this.getCommand(label);
 
-        Permission permission = command.getClass().getAnnotation(Permission.class);
-        if (permission == null || sender.hasPermission(permission.value())) {
+        String permission = command.permission();
+        if (permission == null || sender.hasPermission(permission)) {
             if (sender instanceof Player) {
                 command.run(sender.getServer(), (Player)sender, label, args);
             } else {
@@ -79,8 +79,14 @@ public class CommandManager implements Listener {
         return true;
     }
 
-    // todo: 추후 구현 예정
-    public List<String> onTabComplete() {
-        return new ArrayList<>();
+    public List<String> onTabComplete(CommandSender sender, Command ctx, String label, String[] args) {
+        BaseCommand command = this.getCommand(label);
+
+        String permission = command.permission();
+        if (permission == null || sender.hasPermission(permission)) {
+            return command.getTabCompleteOptions(sender.getServer(), sender, label, args);
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
