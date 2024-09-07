@@ -7,8 +7,8 @@ notEnoughArguments = "<red>Insufficient arguments. See the help message below:</
 error = "<red>An error occured while executing the command. Please contact the manager of server.</red>"
 
 [command.tell]
-sent = "<red>To</red> <player><gray>: <message></gray>"
-received = "<green>From</green> <player><gray>: <message></gray>"
+sent = "<yellow>To</yellow> <player><gray>: <message></gray>"
+received = "<yellow>From</yellow> <player><gray>: <message></gray>"
 
 [command.tpa]
 requestSent = "<aqua>Sent a teleport request to</aqua> <player><aqua>.</aqua>"

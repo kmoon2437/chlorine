@@ -9,20 +9,17 @@ import com.mojang.brigadier.tree.CommandNode;
 import kr.choyunjin.commands.BaseCommand;
 import kr.choyunjin.commands.CommandNodeBuilder;
 import kr.choyunjin.commands.exceptions.NotEnoughArgumentsException;
-import kr.choyunjin.chlorine.textrenderers.WhisperRenderer;
 import kr.choyunjin.chlorine.i18n.I18n;
 import kr.choyunjin.chlorine.exceptions.AdventureComponentException;
 
 public class TellCommand extends BaseCommand {
     private I18n i18n;
-    private WhisperRenderer renderer;
 
     public TellCommand(I18n i18n) {
         super("tell", "w", "msg");
         permission("chlorine.command.tell");
 
         this.i18n = i18n;
-        this.renderer = new WhisperRenderer();
     }
 
     @Override
@@ -49,8 +46,16 @@ public class TellCommand extends BaseCommand {
 
         String message = this.getGreedyString(args, 1);
     
-        sender.sendMessage(this.renderer.render(i18n.tl("command.tell.you"), receiver.displayName(), message));
-        receiver.sendMessage(this.renderer.render(sender.displayName(), i18n.tl("command.tell.you"), message));
+        sender.sendMessage(i18n.tl(
+            "command.tell.sent",
+            i18n.param("player", receiver.displayName()),
+            i18n.param("message", message)
+        ));
+        receiver.sendMessage(i18n.tl(
+            "command.tell.received",
+            i18n.param("player", sender.displayName()),
+            i18n.param("message", message)
+        ));
     }
 
     @Override
