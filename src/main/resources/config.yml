@@ -3,17 +3,17 @@ lang: 'en'
 
 # 채팅 이벤트를 강제로 취소하고 시스템 메세지로 대신함
 # 이렇게 하면 클라이언트가 채팅을 채팅이라고 인식하지 못해 채팅 신고를 원천봉쇄할 수 있음
-rewrite-chat: true
+rewriteChat: true
 
-chat-formats:
+chatFormats:
     # <name> 부분은 해당 유저의 닉네임으로 대체됩니다.
     # <message> 부분은 해당 유저가 보낸 메세지로 대체됩니다.
     default: '<name><gray> > </gray><message>'
 
 # <name> 부분은 해당 유저의 닉네임으로 대체됩니다.
 # <current>, <max> 부분은 각각 현재 접속자 수와 최대 접속자 수로 대체됩니다.
-join-message-formats:
+joinMessageFormats:
     enable: true
-    first-join: '<blue>+=</blue> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'
+    firstJoin: '<blue>+=</blue> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'
     join: '<green>+=</green> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'
     quit: '<red>-=</red> <name> <aqua>[</aqua><yellow><current></yellow> / <yellow><max></yellow><aqua>]</aqua>'

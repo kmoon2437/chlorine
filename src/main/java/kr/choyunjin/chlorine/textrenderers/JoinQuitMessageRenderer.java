@@ -3,31 +3,34 @@ package kr.choyunjin.chlorine.textrenderers;
 import org.bukkit.entity.Player;
 import org.bukkit.Server;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import kr.choyunjin.chlorine.Chlorine;
 
-/**
- * 추후 config.yml에서 형식을 바꿀 수 있도록 할 예정
- */
 public class JoinQuitMessageRenderer {
-    private Component renderPlayersCount(Server server, int playersCountAdjustment) {
-        return Component.text("[").color(NamedTextColor.AQUA)
-            .append(Component.text(server.getOnlinePlayers().size() + playersCountAdjustment).color(NamedTextColor.YELLOW))
-            .append(Component.text(" / ").color(NamedTextColor.WHITE))
-            .append(Component.text(server.getMaxPlayers()).color(NamedTextColor.YELLOW))
-            .append(Component.text("]").color(NamedTextColor.AQUA));
+    private String joinMsgFormat;
+    private String quitMsgFormat;
+
+    public JoinQuitMessageRenderer(Chlorine cl) {
+        this.joinMsgFormat = cl.getConfig().getString("joinMessageFormats.join");
+        this.quitMsgFormat = cl.getConfig().getString("joinMessageFormats.quit");
     }
 
     public Component renderJoinMessage(Player player, Server server) {
-        return Component.text("+= ").color(NamedTextColor.GREEN)
-            .append(Component.text("").color(NamedTextColor.WHITE).append(player.displayName()))
-            .append(Component.text(" "))
-            .append(this.renderPlayersCount(server, 0));
+        return MiniMessage.miniMessage().deserialize(
+            this.joinMsgFormat,
+            Placeholder.component("name", player.displayName()),
+            Placeholder.component("current", Component.text(server.getOnlinePlayers().size())),
+            Placeholder.component("max", Component.text(server.getMaxPlayers()))
+        );
     }
 
     public Component renderQuitMessage(Player player, Server server) {
-        return Component.text("-= ").color(NamedTextColor.RED)
-            .append(Component.text("").color(NamedTextColor.WHITE).append(player.displayName()))
-            .append(Component.text(" "))
-            .append(this.renderPlayersCount(server, -1));
+        return MiniMessage.miniMessage().deserialize(
+            this.quitMsgFormat,
+            Placeholder.component("name", player.displayName()),
+            Placeholder.component("current", Component.text(server.getOnlinePlayers().size() - 1)),
+            Placeholder.component("max", Component.text(server.getMaxPlayers()))
+        );
     }
 }

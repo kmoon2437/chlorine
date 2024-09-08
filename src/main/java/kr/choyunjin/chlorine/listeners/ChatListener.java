@@ -15,7 +15,7 @@ public class ChatListener implements Listener {
 
     public ChatListener(Chlorine cl) {
         this.cl = cl;
-        this.renderer = new ChatMessageRenderer();
+        this.renderer = new ChatMessageRenderer(this.cl);
     }
 
     @EventHandler(
@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
         ignoreCancelled = false
     )
     public void onChat(AsyncChatEvent event) {
-        if (this.cl.getConfig().getBoolean("rewrite-chat")) {
+        if (this.cl.getConfig().getBoolean("rewriteChat")) {
             // 채팅 이벤트를 취소함
             event.setCancelled(true);
 
@@ -31,7 +31,7 @@ public class ChatListener implements Listener {
             Component message = this.renderer.render(source, source.displayName(), event.message());
             event.getPlayer().getServer().broadcast(message);
         } else {
-            event.renderer(renderer);
+            event.renderer(this.renderer);
         }
     }
 }

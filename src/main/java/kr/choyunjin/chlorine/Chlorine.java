@@ -54,7 +54,7 @@ public class Chlorine extends JavaPlugin {
         // event listener 추가
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new ChatListener(this), this);
-        pluginManager.registerEvents(new PlayerJoinQuitListener(), this);
+        pluginManager.registerEvents(new PlayerJoinQuitListener(this), this);
 
         // 명령어 세팅
         this.commandManager = new CommandManager(this);
