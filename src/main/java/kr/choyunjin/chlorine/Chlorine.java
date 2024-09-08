@@ -87,7 +87,6 @@ public class Chlorine extends JavaPlugin {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command ctx, String label, String[] args) {
-        this.getSLF4JLogger().info(label);
         return this.commandManager.onTabComplete(sender, ctx, label, args);
     }
 

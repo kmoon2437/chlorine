@@ -77,16 +77,20 @@ public class CommandManager implements Listener {
         if (firstSpace < 0) return;
 
         String label = buf.substring(0, firstSpace);
+        System.out.println(label);
+        System.out.println(buf);
         BaseCommand command = this.getCommand(label);
         if (command == null) return;
-        List<String> args = this.tokenizeArgs(buf.substring(firstSpace + 1));
+        String[] args = buf.substring(firstSpace + 1).split("/ +/");
 
-        event.setCompletions(this.onTabComplete(event.getSender(), null, label, args.toArray(new String[args.length])));
+        event.setCompletions(this.onTabComplete(event.getSender(), null, label, args));
         event.setHandled(true);
     }
 
     private BaseCommand getCommand(String label) {
-        return this.commands.get(this.commandsIndex.get(label));
+        Integer index = this.commandsIndex.get(label);
+        if (index == null) return null;
+        return this.commands.get(index);
     }
 
     public boolean onCommand(CommandSender sender, Command ctx, String label, String[] args) throws Exception {
