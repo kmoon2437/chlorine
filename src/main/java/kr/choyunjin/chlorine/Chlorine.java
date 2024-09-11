@@ -44,6 +44,7 @@ public class Chlorine extends JavaPlugin {
                 langFileData = this.getResource("translation_en.toml");
             }
             this.i18n = new I18n(Toml.parse(langFileData));
+            langFileData.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
