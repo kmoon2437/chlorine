@@ -16,6 +16,7 @@ dependencies {
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
     implementation("org.tomlj:tomlj:1.1.1")
+    implementation("me.lucko:commodore:2.2")
 }
 
 java {
@@ -35,9 +36,14 @@ tasks {
     
     // implementation으로 설정한 것들을 jar에다가 집어넣어줌
     shadowJar {
+        dependencies {
+            exclude(dependency("com.mojang:brigadier"))
+        }
+
         relocate("org.tomlj", "kr.choyunjin.chlorine.shadow.tomlj")
         relocate("org.antlr", "kr.choyunjin.chlorine.shadow.antlr")
         relocate("org.checkerframework", "kr.choyunjin.chlorine.shadow.checkerframework")
+        relocate("me.lucko.commodore", "kr.choyunjin.chlorine.shadow.commodore")
     }
 
     jar {

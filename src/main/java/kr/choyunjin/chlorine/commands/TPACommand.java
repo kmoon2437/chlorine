@@ -5,7 +5,7 @@ import java.util.Collections;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
-import com.mojang.brigadier.tree.CommandNode;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import kr.choyunjin.commands.BaseCommand;
 import kr.choyunjin.commands.CommandNodeBuilder;
 import kr.choyunjin.commands.exceptions.NotEnoughArgumentsException;
@@ -27,7 +27,7 @@ public class TPACommand extends BaseCommand {
     }
 
     @Override
-    public CommandNode<?> generateCommandNode(CommandNodeBuilder b) {
+    public LiteralCommandNode<?> generateCommandNode(CommandNodeBuilder b) {
         return b.literal(this.name())
         .then(
             b.argument("player", b.wordArg())

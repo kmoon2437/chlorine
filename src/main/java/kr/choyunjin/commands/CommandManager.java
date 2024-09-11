@@ -5,23 +5,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
 import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
+import me.lucko.commodore.Commodore;
+import me.lucko.commodore.CommodoreProvider;
 import kr.choyunjin.commands.exceptions.NoPermissionException;
 
 // 일단 지금은 runtime에서 annotation을 처리하고 있긴 한데
 // 추후 compile time에 처리하도록 바꿀 예정
 public class CommandManager implements Listener {
-    private Plugin plugin;
+    private JavaPlugin plugin;
     private ArrayList<BaseCommand> commands;
     private HashMap<String, Integer> commandsIndex;
 
-    public CommandManager(Plugin plugin) {
+    public CommandManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
         this.commands = new ArrayList<>();
@@ -31,6 +33,12 @@ public class CommandManager implements Listener {
     public void registerCommands(BaseCommand... commands) {
         for (BaseCommand command : commands) {
             this.commands.add(command);
+        }
+        if (CommodoreProvider.isSupported()) {
+            Commodore commodore = CommodoreProvider.getCommodore(plugin);
+            for (BaseCommand command : commands) {
+                commodore.register(this.plugin.getCommand(command.name()), command.getCommandNode());
+            }
         }
         this.generateIndex();
     }
@@ -48,21 +56,6 @@ public class CommandManager implements Listener {
     }
 
     @EventHandler
-    public void onPlayerSendCommandsEvent(AsyncPlayerSendCommandsEvent<?> event) {
-        if (!event.isAsynchronous() && event.hasFiredAsync()) {
-            return;
-        }
-
-        Player sender = event.getPlayer();
-        for (BaseCommand command : this.commands) {
-            String permission = command.permission();
-            if (permission == null || sender.hasPermission(permission)) {
-                command.applyCommandNode(sender, event.getCommandNode());
-            }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
     public void onAsyncTabComplete(AsyncTabCompleteEvent event) {
         if (!event.isCommand()) return;
 
@@ -77,11 +70,9 @@ public class CommandManager implements Listener {
         if (firstSpace < 0) return;
 
         String label = buf.substring(0, firstSpace);
-        System.out.println(label);
-        System.out.println(buf);
         BaseCommand command = this.getCommand(label);
         if (command == null) return;
-        String[] args = buf.substring(firstSpace + 1).split("/ +/");
+        String[] args = buf.substring(firstSpace + 1).split(" ");
 
         event.setCompletions(this.onTabComplete(event.getSender(), null, label, args));
         event.setHandled(true);

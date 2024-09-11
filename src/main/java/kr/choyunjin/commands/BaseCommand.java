@@ -10,6 +10,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 import com.mojang.brigadier.tree.CommandNode;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
 
 public abstract class BaseCommand {
@@ -33,7 +34,7 @@ public abstract class BaseCommand {
     private String name;
     private String[] aliases;
     private String permission;
-    private CommandNode<?> commandNode;
+    private LiteralCommandNode<?> commandNode;
 
     protected BaseCommand(String name, String... aliases) {
         this.name = name;
@@ -58,8 +59,12 @@ public abstract class BaseCommand {
         this.permission = permission;
     }
 
-    public CommandNode<?> generateCommandNode(CommandNodeBuilder b) {
+    protected LiteralCommandNode<?> generateCommandNode(CommandNodeBuilder b) {
         return b.literal(this.name).build();
+    }
+
+    public LiteralCommandNode<?> getCommandNode() {
+        return this.commandNode;
     }
 
     protected String getGreedyString(String[] args, int i) {
@@ -94,23 +99,5 @@ public abstract class BaseCommand {
 
     public List<String> getTabCompleteOptions(Server server, CommandSender sender, String label, String[] args) {
         return Collections.emptyList();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void removeChildNode(RootCommandNode<?> rootNode, String name) {
-        try {
-            for (Field field : CHILDREN_FIELDS) {
-                Map<String, ?> children = (Map<String, ?>)field.get(rootNode);
-                children.remove(name);
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public void applyCommandNode(Player player, RootCommandNode<?> rootNode) {
-        this.removeChildNode(rootNode, this.commandNode.getName());
-        rootNode.addChild((CommandNode)this.commandNode);
     }
 }
