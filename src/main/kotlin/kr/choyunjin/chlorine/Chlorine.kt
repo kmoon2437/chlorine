@@ -2,7 +2,8 @@ package kr.choyunjin.chlorine
 
 import java.io.IOException
 import org.bukkit.plugin.java.JavaPlugin
-import org.tomlj.Toml
+import org.json.JSONObject
+import org.json.JSONTokener
 import kr.choyunjin.chlorine.i18n.I18n
 import kr.choyunjin.chlorine.listeners.*
 
@@ -20,15 +21,20 @@ class Chlorine : JavaPlugin() {
         val langName = this.config.getString("lang")
         val langFileName = StringBuilder("translation_")
         langFileName.append(langName)
-        langFileName.append(".toml")
+        langFileName.append(".json")
 
         try {
             var langFileData = this.getResource(langFileName.toString())
+
             if (langFileData == null) {
                 logger.warn("Language \"{}\" not found, falling back to \"en\" (English)", langName)
-                langFileData = this.getResource("translation_en.toml")!!
+                logger.info("Loading language \"en\"")
+                langFileData = this.getResource("translation_en.json")!!
+            } else {
+                logger.info("Loading language \"{}\"", langName)
             }
-            this.i18n = I18n(Toml.parse(langFileData))
+
+            this.i18n = I18n(JSONObject(JSONTokener(langFileData)))
             langFileData.close()
         } catch (e: IOException) {
             throw RuntimeException(e)

@@ -1,0 +1,25 @@
+{
+    "general": {
+        "playerNotFound": "<red>No such player exists.</red>"
+    },
+    "command": {
+        "noPermission": "<red>You are not permitted for this command.</red>",
+        "notEnoughArguments": "<red>Insufficient arguments. See the help message below:</red>",
+        "error": "<red>An error occured while executing the command. Please contact the manager of server.</red>",
+        "tell": {
+            "sent": "<yellow>To</yellow> <player><gray>: <message></gray>",
+            "received": "<yellow>From</yellow> <player><gray>: <message></gray>"
+        },
+        "tpa": {
+            "requestSent": "<aqua>Sent a teleport request to</aqua> <player><aqua>.</aqua>",
+            "howToCancel": "<aqua>Type <yellow>/tpacancel</yellow> to <red>cancel</red> it.</aqua>",
+            "tpaReceived": "<player> <aqua>wants to teleport to you.</aqua>",
+            "tpahereReceived": "<player> <aqua>wants you to teleport there.</aqua>",
+            "acceptOrDeny": "<aqua>Type <yellow>/tpaccept</yellow> to <green>accept</green>, or <yellow>/tpdeny</yellow> to <red>deny</red> it.</aqua>",
+            "tpaccept": "<green>Accepted</green> <aqua>teleport request from</aqua> <player>.",
+            "tpdeny": "<red>Denied</red> <aqua>teleport request from</aqua> <player>.",
+            "requestAccepted": "<player> <green>accepted</green> <aqua>your teleport request.</aqua>",
+            "requestDenied": "<player> <red>denied</red> <aqua>your teleport request.</aqua>"
+        }
+    }
+}

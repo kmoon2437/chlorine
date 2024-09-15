@@ -5,6 +5,9 @@ description: 'Just like Essentials, but almost not overrides Minecraft commands'
 author: 'Cho Yunjin'
 website: 'https://github.com/kmoon2437/chlorine'
 api-version: '1.21.1'
+libraries: # kotlin 관련해서 필요한 것들
+    - org.jetbrains.kotlin:kotlin-stdlib:2.0.20
+    - org.jetbrains:annotations:24.1.0
 
 # default 값이...
 # - true이면 모두에게 권한 부여
