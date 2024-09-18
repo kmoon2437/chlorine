@@ -1,0 +1,30 @@
+{
+    "general": {
+        "playerNotFound": "<red>相当するプレイヤーが存在しません.</red>"
+    },
+    "teleport": {
+        "teleporting": "<target><aqua>にテレポートします.</aqua>",
+        "pleaseWait": "<pink><second></pink><aqua>秒後でテレポートします.</aqua> <red>動かないでください.</red>",
+        "cancelledForMoving": "<red>動きが感知され, テレポートがキャンセルされました.</red>"
+    },
+    "command": {
+        "noPermission": "<red>このコマンドを実行する権限がありません.</red>",
+        "notEnoughArguments": "<red>パラメータが足りません. 次の使い方をお読みください:</red>",
+        "error": "<red>コマンド実行途中でエラーが発生しました. サバーの管理者に報告してください.</red>"
+        "tell": {
+            "sent": "<player><yellow>まで</yellow><gray>: <message></gray>",
+            "received": "<player><yellow>より</yellow><gray>: <message></gray>"
+        },
+        "tpa": {
+            "requestSent": "<player><aqua>へテレポートリクエストを送りました.</aqua>",
+            "howToCancel": "<aqua>リクエストを<red>キャンセル</red>するには<yellow>/tpacancel</yellow>を入力してください.</aqua>",
+            "tpaReceived": "<player><aqua>さんがあなたへのテレポートをリクエストしました.</aqua>",
+            "tpahereReceived": "<player><aqua>さんがあなたにテレポートをリクエストしました.</aqua>",
+            "acceptOrDeny": "<aqua>リクエストを<green>受諾</green>するには<yellow>/tpaccept</yellow>, <red>断る</red>には<yellow>/tpdeny</yellow>を入力してください.</aqua>",
+            "tpaccept": "<player><aqua>さんからのテレポートリクエストを<green>受諾</green>しました.</aqua>",
+            "tpdeny": "<player><aqua>さんからのテレポートリクエストを<red>断り</red>ました.</aqua>",
+            "requestAccepted": "<player><aqua>さんがあなたからのテレポートリクエストを<green>受諾</green>しました.</aqua>",
+            "requestDenied": "<player><aqua>さんがあなたからのテレポートリクエストを<red>断り</red>ました.</aqua>"
+        }
+    }
+}
