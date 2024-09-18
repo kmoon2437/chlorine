@@ -10,7 +10,7 @@
     "command": {
         "noPermission": "<red>このコマンドを実行する権限がありません.</red>",
         "notEnoughArguments": "<red>パラメータが足りません. 次の使い方をお読みください:</red>",
-        "error": "<red>コマンド実行途中でエラーが発生しました. サバーの管理者に報告してください.</red>"
+        "error": "<red>コマンド実行途中でエラーが発生しました. サバーの管理者に報告してください.</red>",
         "tell": {
             "sent": "<player><yellow>まで</yellow><gray>: <message></gray>",
             "received": "<player><yellow>より</yellow><gray>: <message></gray>"
