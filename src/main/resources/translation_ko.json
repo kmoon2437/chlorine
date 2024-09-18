@@ -2,6 +2,11 @@
     "general": {
         "playerNotFound": "<red>해당 플레이어가 존재하지 않습니다.</red>"
     },
+    "teleport": {
+        "teleporting": "<target><aqua>(으)로 텔레포트합니다.</aqua>",
+        "pleaseWait": "<pink><second></pink><aqua>초 후 텔레포트됩니다. <red>움직이지 말고</red> 가만히 기다리십시오.</aqua>",
+        "cancelledForMoving": "<red>움직임이 감지되어 텔레포트가 취소되었습니다.</red>"
+    },
     "command": {
         "noPermission": "<red>이 명령어를 실행할 권한이 없습니다.</red>",
         "notEnoughArguments": "<red>인자가 부족합니다. 아래의 도움말을 참조하십시오:</red>",
@@ -13,7 +18,7 @@
         "tpa": {
             "requestSent": "<player><aqua>에게 텔레포트 요청을 보냈습니다.</aqua>",
             "howToCancel": "<aqua>요청을 <red>취소</red>하시려면 <yellow>/tpacancel</yellow>을 입력하세요.</aqua>",
-            "tpaReceived": "<player><aqua>님이 당신에게로의 텔레포트 요청을 보냈습니다.</aqua>",
+            "tpaReceived": "<player><aqua>님이 당신에게로의 텔레포트를 요청했습니다.</aqua>",
             "tpahereReceived": "<player><aqua>님이 당신에게 텔레포트 요청을 보냈습니다.</aqua>",
             "acceptOrDeny": "<aqua>요청을 <green>수락</green>하시려면 <yellow>/tpaccept</yellow>, <red>거절</red>하시려면 <yellow>/tpdeny</yellow>를 입력하세요.</aqua>",
             "tpaccept": "<player><aqua>님의 텔레포트 요청을 <green>수락</green>했습니다.</aqua>",

@@ -29,11 +29,14 @@ class Chlorine : JavaPlugin() {
             logger.info("Loading language \"{}\"", langName)
         }
 
-        this.i18n = I18n(JSONObject(JSONTokener(langFileData)))
-        langFileData.close()
+        langFileData.use {
+            this.i18n = I18n(JSONObject(JSONTokener(it)))
+        }
 
         // event listener 추가
-        this.server.pluginManager.registerEvents(ChatListener(this), this)
-        this.server.pluginManager.registerEvents(PlayerJoinQuitListener(this), this)
+        this.server.pluginManager.also {
+            it.registerEvents(ChatListener(this), this)
+            it.registerEvents(PlayerJoinQuitListener(this), this)
+        }
     }
 }

@@ -2,6 +2,11 @@
     "general": {
         "playerNotFound": "<red>No such player exists.</red>"
     },
+    "teleport": {
+        "teleporting": "<aqua>Teleporting to</aqua> <target><aqua>.</aqua>",
+        "pleaseWait": "<aqua>Teleporting after <pink><second></pink> seconds.</aqua> <red>Don't move.</red>",
+        "cancelledForMoving": "<red>Teleport cancelled because of moving.</red>"
+    },
     "command": {
         "noPermission": "<red>You are not permitted for this command.</red>",
         "notEnoughArguments": "<red>Insufficient arguments. See the help message below:</red>",
