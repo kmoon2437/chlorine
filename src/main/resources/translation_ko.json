@@ -13,7 +13,7 @@
         "error": "<red>명령 실행 도중 오류가 발생했습니다. 서버 관리자에게 문의하십시오.</red>",
         "tell": {
             "sent": "<player><yellow>에게</yellow><gray>: <message></gray>",
-            "received": "<player> <yellow>보냄</yellow><gray>: <message></gray>"
+            "received": "<player><blue>으</blue><yellow>로부터</yellow><gray>: <message></gray>"
         },
         "tpa": {
             "requestSent": "<player><aqua>에게 텔레포트 요청을 보냈습니다.</aqua>",

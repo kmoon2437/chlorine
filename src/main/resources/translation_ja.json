@@ -16,7 +16,7 @@
             "received": "<player><yellow>より</yellow><gray>: <message></gray>"
         },
         "tpa": {
-            "requestSent": "<player><aqua>へテレポートリクエストを送りました.</aqua>",
+            "requestSent": "<player><aqua>にテレポートリクエストを送りました.</aqua>",
             "howToCancel": "<aqua>リクエストを<red>キャンセル</red>するには<yellow>/tpacancel</yellow>を入力してください.</aqua>",
             "tpaReceived": "<player><aqua>さんがあなたへのテレポートをリクエストしました.</aqua>",
             "tpahereReceived": "<player><aqua>さんがあなたにテレポートをリクエストしました.</aqua>",
