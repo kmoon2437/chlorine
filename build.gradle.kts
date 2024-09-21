@@ -34,6 +34,9 @@ tasks {
             exclude(dependency("org.jetbrains:annotations"))
         }
 
+        // 필요한 것들만!
+        minimize()
+
         relocate("org.json", "kr.choyunjin.chlorine.shadow.org.json")
     }
 

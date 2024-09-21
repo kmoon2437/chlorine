@@ -3,8 +3,6 @@ package kr.choyunjin.chlorine.i18n
 import org.json.JSONObject
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 
 private fun getValueRecursively(jsonObj: JSONObject, key: List<String>): String? {
     val obj = jsonObj.get(key.get(0))
@@ -23,20 +21,22 @@ class I18n(val translations: JSONObject) {
         return tlValue ?: key;
     }
 
-    fun tl(key: String, vararg params: TagResolver): Component {
-        return MiniMessage.miniMessage().deserialize(this.getTranslatedString(key), *params);
+    fun tl(key: String): Component {
+        return MiniMessage.miniMessage().deserialize(this.getTranslatedString(key));
+    }
+
+    fun tl(key: String, initContext: TranslationContext.() -> Unit): Component {
+        val ctx = TranslationContext()
+        ctx.initContext()
+        return MiniMessage.miniMessage().deserialize(this.getTranslatedString(key), *ctx.params.toTypedArray());
     }
 
     // minimessage 문법이 없는 경우 사용
-    fun tlraw(key: String, vararg params: TagResolver): String {
-        return MiniMessage.miniMessage().serialize(this.tl(key, *params));
-    }
-    
-    fun param(name: String, componentValue: Component): TagResolver {
-        return Placeholder.component(name, componentValue);
+    fun tlraw(key: String,): String {
+        return MiniMessage.miniMessage().serialize(this.tl(key));
     }
 
-    fun param(name: String, stringValue: String): TagResolver {
-        return Placeholder.unparsed(name, stringValue);
+    fun tlraw(key: String, initContext: TranslationContext.() -> Unit): String {
+        return MiniMessage.miniMessage().serialize(this.tl(key, initContext));
     }
 }
